@@ -1,7 +1,6 @@
 import { PrismaClient, User } from "@prisma/client";
 import { Request, Response } from "express";
-import fetch from "node-fetch";
-import { Listing } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 export class ListingController {
