@@ -6,8 +6,8 @@ import { ListingController } from "../Controller/ListingController";
 const routes = Router();
 const listingController = new ListingController();
 
-routes.get("/get", listingController.getListings);
+routes.get("/listings", listingController.getListings);
 routes.post("/create", isAuth, authMiddleware, listingController.createListing);
-routes.post("/list", listingController.getListing);
+routes.get("/listing/:listingId", listingController.getListing);
 
 export default routes;

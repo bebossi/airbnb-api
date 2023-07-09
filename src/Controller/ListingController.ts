@@ -32,14 +32,24 @@ export class ListingController {
 
   async getListings(req: Request, res: Response) {
     try {
+      const listings = await prisma.listing.findMany();
+
+      return res.status(200).json(listings);
     } catch (error) {
       console.error(error);
     }
   }
 
   async getListing(req: Request, res: Response) {
-    const currentUserId = req.currentUser?.id;
     try {
+      const { listingId } = req.params;
+
+      const listing = await prisma.listing.findUnique({
+        where: {
+          id: Number(listingId),
+        },
+      });
+      return res.status(200).json(listing);
     } catch (error) {
       console.error(error);
     }
