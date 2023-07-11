@@ -8,18 +8,30 @@ export class ListingController {
     try {
       const currentUserId = req.currentUser?.id;
 
+      const {
+        title,
+        description,
+        image,
+        category,
+        roomCount,
+        bathroomCount,
+        guestCount,
+        location,
+        price,
+      } = req.body;
+
       const listing = await prisma.listing.create({
         data: {
-          title: req.body.title as string,
-          description: req.body.description as string,
-          image: req.body.image as string,
-          category: req.body.category as string,
-          roomCount: req.body.roomCount as number,
-          bathroomCount: req.body.bathroomCount as number,
-          guestCount: req.body.guestCount as number,
-          locationValue: req.body.locationValue as string,
-          userId: currentUserId as number,
-          price: req.body.price as number,
+          title,
+          description,
+          image,
+          category,
+          roomCount,
+          bathroomCount,
+          guestCount,
+          locationValue: location.value,
+          userId: currentUserId!,
+          price: parseInt(price, 10),
         },
       });
 

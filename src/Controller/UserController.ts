@@ -16,12 +16,9 @@ export class UserController {
 
       const newUser = await prisma.user.create({
         data: {
-          userName,
           email,
           firstName,
-          lastName,
           password: hashedPassword,
-          image,
         },
       });
 
