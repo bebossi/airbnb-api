@@ -59,6 +59,19 @@ export class UserController {
     }
   }
 
+  async getCurrentUser(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+
+      const currentUser = await prisma.user.findUnique({
+        where: { id: currentUserId },
+      });
+      return res.status(200).json(currentUser);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async addFavoriteIds(req: Request, res: Response) {
     try {
       const currentUserId = req.currentUser?.id;

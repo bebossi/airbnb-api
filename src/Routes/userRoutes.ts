@@ -20,5 +20,6 @@ routes.delete(
   authMiddleware,
   userController.deleteFavoriteId
 );
+routes.get("/user", isAuth, authMiddleware, userController.getCurrentUser);
 
 export default routes;
