@@ -63,6 +63,9 @@ export class ListingController {
         where: {
           id: Number(listingId),
         },
+        include: {
+          user: true,
+        },
       });
       return res.status(200).json(listing);
     } catch (error) {
