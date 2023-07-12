@@ -18,7 +18,7 @@ model User {
   password      String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  favoriteIds   String[]
+  favoriteIds   Int[]     @default([])
 
   accounts     Account[]
   listings     Listing[]

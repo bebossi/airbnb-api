@@ -1,6 +1,7 @@
+import { ResevervationController } from "./ReservationController";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { generateToken } from "../config/jwt.config";
 
 const prisma = new PrismaClient();
@@ -53,6 +54,53 @@ export class UserController {
         },
         token: token,
       });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async addFavoriteIds(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+      const { listingId } = req.params;
+
+      const currentUserr = await prisma.user.findUnique({
+        where: { id: currentUserId },
+      });
+      let favoriteIds = [...(currentUserr?.favoriteIds || [])];
+      favoriteIds.push(Number(listingId));
+
+      const currentUser = await prisma.user.update({
+        where: { id: currentUserId },
+        data: {
+          favoriteIds,
+        },
+      });
+
+      return res.status(200).json(currentUser);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async deleteFavoriteId(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+      const { listingId } = req.params;
+
+      const currentUserr = await prisma.user.findUnique({
+        where: { id: currentUserId },
+      });
+
+      let favoriteIds = [...(currentUserr?.favoriteIds || [])];
+      favoriteIds = favoriteIds.filter((id) => id !== Number(listingId));
+
+      const user = await prisma.user.update({
+        where: { id: currentUserId },
+        data: { favoriteIds },
+      });
+
+      return res.status(200).json(user);
     } catch (err) {
       console.log(err);
     }

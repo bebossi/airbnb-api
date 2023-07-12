@@ -43,7 +43,11 @@ export class ListingController {
 
   async getListings(req: Request, res: Response) {
     try {
-      const listings = await prisma.listing.findMany();
+      const listings = await prisma.listing.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
 
       return res.status(200).json(listings);
     } catch (error) {
