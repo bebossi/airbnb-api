@@ -8,7 +8,7 @@ const routes = Router();
 const resevervationController = new ResevervationController();
 
 routes.post(
-  "/reservation/:listingId",
+  "/reservation",
   isAuth,
   authMiddleware,
   resevervationController.createReservation

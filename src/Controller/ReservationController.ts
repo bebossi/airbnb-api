@@ -6,16 +6,15 @@ const prisma = new PrismaClient();
 export class ResevervationController {
   async createReservation(req: Request, res: Response) {
     try {
-      const { listingId } = req.params;
       const currentUserId = req.currentUser?.id;
-      const { startDate, endDate, totalPrice } = req.body;
+      const { startDate, endDate, totalPrice, listingId } = req.body;
 
       const listingReservation = await prisma.reservation.create({
         data: {
           userId: currentUserId!,
           listingId: Number(listingId),
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate,
+          endDate,
           totalPrice,
         },
       });
