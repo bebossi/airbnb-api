@@ -17,7 +17,19 @@ routes.get(
   "/reservations/:listingId",
   isAuth,
   authMiddleware,
-  resevervationController.getReservations
+  resevervationController.getReservationsByListing
+);
+routes.get(
+  "/reservations",
+  isAuth,
+  authMiddleware,
+  resevervationController.getreservationsByUser
+);
+routes.delete(
+  "/reservations/:reservationId",
+  isAuth,
+  authMiddleware,
+  resevervationController.deletereservation
 );
 
 export default routes;

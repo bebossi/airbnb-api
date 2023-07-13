@@ -25,7 +25,7 @@ export class ResevervationController {
     }
   }
 
-  async getReservations(req: Request, res: Response) {
+  async getReservationsByListing(req: Request, res: Response) {
     try {
       const { listingId } = req.params;
 
@@ -40,6 +40,47 @@ export class ResevervationController {
       });
 
       return res.status(200).json(reservations);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getreservationsByUser(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+
+      const reservations = await prisma.reservation.findMany({
+        where: { userId: currentUserId },
+        include: {
+          listing: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      return res.status(200).json(reservations);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async deletereservation(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+      const { reservationId } = req.params;
+
+      const reservation = await prisma.reservation.deleteMany({
+        where: {
+          id: Number(reservationId),
+          OR: [
+            { userId: currentUserId },
+            { listing: { userId: currentUserId } },
+          ],
+        },
+      });
+
+      return res.status(200).json(reservation);
     } catch (err) {
       console.log(err);
     }
