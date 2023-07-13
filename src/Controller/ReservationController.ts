@@ -1,5 +1,5 @@
 import { Listing, PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
+import { Request, Response, query } from "express";
 
 const prisma = new PrismaClient();
 
@@ -20,6 +20,26 @@ export class ResevervationController {
       });
 
       return res.status(200).json(listingReservation);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getReservations(req: Request, res: Response) {
+    try {
+      const { listingId } = req.params;
+
+      const reservations = await prisma.reservation.findMany({
+        where: { listingId: Number(listingId) },
+        include: {
+          listing: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      return res.status(200).json(reservations);
     } catch (err) {
       console.log(err);
     }

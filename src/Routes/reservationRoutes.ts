@@ -13,5 +13,11 @@ routes.post(
   authMiddleware,
   resevervationController.createReservation
 );
+routes.get(
+  "/reservations/:listingId",
+  isAuth,
+  authMiddleware,
+  resevervationController.getReservations
+);
 
 export default routes;
