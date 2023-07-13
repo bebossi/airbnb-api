@@ -25,6 +25,12 @@ routes.get(
   authMiddleware,
   resevervationController.getreservationsByUser
 );
+routes.get(
+  "/allReservations",
+  isAuth,
+  authMiddleware,
+  resevervationController.getReservationsByAuthor
+);
 routes.delete(
   "/reservations/:reservationId",
   isAuth,

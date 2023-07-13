@@ -65,6 +65,28 @@ export class ResevervationController {
     }
   }
 
+  async getReservationsByAuthor(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+
+      const reservations = await prisma.reservation.findMany({
+        where: {
+          listing: { userId: currentUserId },
+        },
+        include: {
+          listing: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      return res.status(200).json(reservations);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async deletereservation(req: Request, res: Response) {
     try {
       const currentUserId = req.currentUser?.id;
