@@ -9,5 +9,23 @@ const listingController = new ListingController();
 routes.get("/listings", listingController.getListings);
 routes.post("/create", isAuth, authMiddleware, listingController.createListing);
 routes.get("/listing/:listingId", listingController.getListing);
+routes.get(
+  "/favoriteListings",
+  isAuth,
+  authMiddleware,
+  listingController.getFavoriteListings
+);
+routes.get(
+  "/properties",
+  isAuth,
+  authMiddleware,
+  listingController.getProperties
+);
+routes.delete(
+  "/listing/:listingId",
+  isAuth,
+  authMiddleware,
+  listingController.deleteListing
+);
 
 export default routes;

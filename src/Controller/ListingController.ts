@@ -72,4 +72,64 @@ export class ListingController {
       console.error(error);
     }
   }
+
+  async getFavoriteListings(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+
+      const currentUser = await prisma.user.findUnique({
+        where: { id: currentUserId },
+      });
+
+      const favorites = await prisma.listing.findMany({
+        where: {
+          id: {
+            in: [...(currentUser?.favoriteIds || [])],
+          },
+        },
+      });
+
+      return res.status(200).json(favorites);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getProperties(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+
+      const listings = await prisma.listing.findMany({
+        where: {
+          userId: currentUserId,
+        },
+      });
+
+      return res.status(200).json(listings);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async deleteListing(req: Request, res: Response) {
+    try {
+      const currentUserId = req.currentUser?.id;
+      const { listingId } = req.params;
+
+      if (!currentUserId) {
+        return res.status(404).json("Error");
+      }
+
+      const listing = await prisma.listing.deleteMany({
+        where: {
+          id: Number(listingId),
+          userId: currentUserId,
+        },
+      });
+
+      return res.status(200).json(listing);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
