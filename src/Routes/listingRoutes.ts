@@ -27,11 +27,6 @@ routes.delete(
   authMiddleware,
   listingController.deleteListing
 );
-routes.get(
-  "/listingSearch",
-  isAuth,
-  authMiddleware,
-  listingController.searchingListing
-);
+routes.get("/listingSearch", listingController.searchingListing);
 
 export default routes;
