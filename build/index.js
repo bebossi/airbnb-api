@@ -10,6 +10,7 @@ var cors_1 = __importDefault(require("cors"));
 var app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://airbnnbclone.onrender.com"],
+    credentials: true,
 }));
 app.use(express_1.default.json());
 app.use(Routes_1.default);
