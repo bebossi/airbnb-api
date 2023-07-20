@@ -10,7 +10,7 @@ app.use(
     origin: [
       "http://localhost:5174",
       "https://airbnnbclone.onrender.com",
-      "https://airbnnbclone.onrender.com",
+      "https://airbnnbcloneapi.onrender.com",
     ],
     credentials: true,
   })
