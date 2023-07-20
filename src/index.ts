@@ -7,7 +7,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5174", "https://airbnnbclone.onrender.com/"],
+    origin: [
+      "http://localhost:5174",
+      "https://airbnnbclone.onrender.com",
+      "https://airbnnbclone.onrender.com",
+    ],
     credentials: true,
   })
 );
