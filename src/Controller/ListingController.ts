@@ -183,6 +183,7 @@ export class ListingController {
 
       return res.status(200).json(listings);
     } catch (err) {
+      return res.status(500).json(err);
       console.error(err);
     }
   }
