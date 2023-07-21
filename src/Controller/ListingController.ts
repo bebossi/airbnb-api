@@ -135,7 +135,6 @@ export class ListingController {
 
   async searchingListing(req: Request, res: Response) {
     try {
-      const currentUserId = req.currentUser?.id;
       const {
         roomCount,
         userId,
