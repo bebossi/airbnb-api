@@ -282,7 +282,7 @@ var ListingController = /** @class */ (function () {
                     case 2:
                         err_5 = _c.sent();
                         console.error(err_5);
-                        return [3 /*break*/, 3];
+                        return [2 /*return*/, res.status(500).json(err_5)];
                     case 3: return [2 /*return*/];
                 }
             });

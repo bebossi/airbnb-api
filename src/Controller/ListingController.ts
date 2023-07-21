@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
@@ -183,8 +183,8 @@ export class ListingController {
 
       return res.status(200).json(listings);
     } catch (err) {
-      return res.status(500).json(err);
       console.error(err);
+      return res.status(500).json(err);
     }
   }
 }
